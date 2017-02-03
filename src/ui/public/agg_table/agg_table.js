@@ -96,6 +96,7 @@ uiModules
           }
 
           const isFieldNumeric = (field && field.type === 'number');
+          const isFieldNotDate = (field && field.type "!==" 'date');
           const isFirstValueNumeric = _.isNumber(_.get(table, `rows[0][${i}].value`));
 
           if (isFieldNumeric || isFirstValueNumeric) {
@@ -105,7 +106,9 @@ uiModules
 
             switch ($scope.totalFunc) {
               case 'sum':
-                formattedColumn.total = sum(table.rows);
+                if (isFieldNotDate) {
+                  formattedColumn.total = sum(table.rows);
+                }
                 break;
               case 'avg':
                 formattedColumn.total = sum(table.rows) / table.rows.length;
